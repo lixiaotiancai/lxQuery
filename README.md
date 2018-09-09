@@ -22,7 +22,7 @@ npm i lxquery
     ...
     ...
     <script src="../dist/lxquery.js"></script>
-<body/>
+</body>
 ```
 
 ***
