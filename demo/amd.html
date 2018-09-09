@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>amd demo</title>
+<style type="text/css">
+    .blue {
+        color: blue;
+    }
+    .size {
+        font-size: 20px;
+    }
+    input {
+      width: 400px;
+    }
+</style>
+</head>
+<body>
+    <div class="blue" id='div1'>1</div>
+    <div>2</div>
+    <div>3</div>
+    <input type="text" placeholder="debouce 输入框 打开控制台一边输入一边看看console" />
+</body>
+<!-- lxQuery兼容amd规范 可通过require.js以模块的形式加载 -->
+<script src='https://cdn.bootcss.com/require.js/2.3.5/require.js'></script>
+<script>
+  let lxquerySrc = '../dist/lxquery' // 引入路径
+
+  /** 引入后可正常使用 更多api请查阅文档 **/
+  require([lxquerySrc], function (lx) {
+    // 使用内置函数
+
+    lx.each([1, 2, 3], function (i, el) {
+      console.log(i, el)
+    })
+
+    lx.fetchJsonp('http://api.douban.com/v2/movie/top250', {
+      data: {
+        start: 0,
+        count: 10
+      }
+    }).then(res => console.log(res)).catch(err => console.log(err))
+
+    // 操作dom
+
+    lx('div').eq(1).css({color: 'red', 'margin-top': '20px'}).end().removeItemByIndex(1).attr('data-x', 'x')
+
+    lx('div').css('font-size', function (i, value) {
+      return parseInt(value) + i * 10 + 'px'
+    })
+
+    // 结合
+    lx('input').on('keyup', lx.createDebounce(() => {
+      console.log(lx('input')[0].value)
+    }, 300))
+  })
+</script>
+</html>
