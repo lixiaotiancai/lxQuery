@@ -1,10 +1,10 @@
 const jsdom = require('jsdom')
 
 const {
-  JSDOM
+    JSDOM
 } = jsdom
 const {
-  document
+    document
 } = (new JSDOM('<!doctype html><html><body><div>1</div><div>2</div></body></html>')).window
 global.document = document
 global.window = document.defaultView

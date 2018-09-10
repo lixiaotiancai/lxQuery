@@ -47,3 +47,6 @@ var lx = require('lxquery')
 ```
 npm test
 ```
+# More API
+**want to know more about lxQuery?click [here](https://github.com/lixiaotiancai/lxQueryDoc) to read lxQuery document**<br>
+lxQuery document link: https://github.com/lixiaotiancai/lxQueryDoc
