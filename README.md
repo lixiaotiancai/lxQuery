@@ -46,6 +46,8 @@ var lx = require('lxquery')
 ## the test lirary for lxQuery use Jest, welcome to add more test example
 ```
 npm test
+
+npm run coverage
 ```
 # More API
 **want to know more about lxQuery?click [here](https://github.com/lixiaotiancai/lxQueryDoc) to read lxQuery document**<br>
