@@ -572,7 +572,7 @@ lxQuery.fn = lxQuery.prototype;
 
 lxQuery.fn.constructor = lxQuery;
 
-lxQuery.fn.version = '1.0.0';
+lxQuery.fn.version = '1.0.3';
 
 lxQuery.fn.length = 0;
 
