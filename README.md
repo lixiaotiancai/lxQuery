@@ -8,7 +8,7 @@ Thanks for supporting.   --author: 李骁
 # Install lxQuery
 ## download from github
 ```
-https://github.com/lixiaotiancai/lxQuery.git
+git clone https://github.com/lixiaotiancai/lxQuery.git
 ```
 ## download from npm
 ```
