@@ -5,9 +5,9 @@
   "scripts": {
     "test": "npx jest",
     "coverage": "npx jest --coverage",
-    "build": "webpack"
+    "build": "webpack",
+    "precommit": "npx jest --coverage"
   },
-  "precommit": "npx jest --coverage",
   "main": "dist/lxquery.js",
   "keywords": [
     "tool",
