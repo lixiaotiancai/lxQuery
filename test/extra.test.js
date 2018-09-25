@@ -261,3 +261,43 @@ describe('sleep', () => {
     }
   })
 })
+
+// test formatDate
+
+const {
+  formatDate
+} = extra
+
+describe('formatDate', () => {
+  test('normal test', () => {
+    expect(formatDate('YYYY-MM-DD hh:mm:ss', new Date(2018, 8, 22, 8, 8, 8))).toBe('2018-09-22 08:08:08')
+    expect(formatDate('Y-M-D h:m:s', new Date(2018, 8, 22, 8, 8, 8))).toBe('2018-9-22 8:8:8')
+    expect(formatDate('YYYY-MM-DD hh:mm:ss', 1537545448184)).toBe('2018-09-21 23:57:28')
+  })
+  test('wrong input date', () => {
+    expect(formatDate('YYYY-MM-DD', 'asdasda')).toBe('')
+  })
+})
+
+// test xss
+
+const {
+  delHtmlTag,
+  htmlEncode
+} = extra
+
+describe('xss', () => {
+  test('delHtmlTag test', () => {
+    let testHtml1 = '<div data-index="index">text<img src="src"/></div>'
+    let testHtml2 = '<h1>这是h1的内容!<a href="a.com">详情可点击</a></><img src="a.jpg" />'
+    let testHtml3 = '<啦啦啦 />123456<123></input aaa>'
+
+    expect(delHtmlTag(testHtml1)).toBe('text')
+    expect(delHtmlTag(testHtml2)).toBe('这是h1的内容!详情可点击')
+    expect(delHtmlTag(testHtml3)).toBe('<啦啦啦 />123456<123>')
+  })
+
+  test('htmlEncode', () => {
+    expect(htmlEncode('<script></script>')).toBe('&lt;script&gt;&lt;/script&gt;')
+  })
+})

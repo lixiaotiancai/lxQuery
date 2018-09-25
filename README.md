@@ -52,3 +52,14 @@ npm run coverage
 # More API
 **want to know more about lxQuery?click [here](https://github.com/lixiaotiancai/lxQueryDoc) to read lxQuery document**<br>
 lxQuery document link: https://github.com/lixiaotiancai/lxQueryDoc
+
+#### 1.0.4 Log
+add 3 extra method<br>
+<br>
+add lx.formatDate()<br>
+add lx.delHtmlTag()<br>
+add lx.htmlEncode()<br>
+<br>
+#### 1.0.3 Log (fill)
+add npm run coverage<br>
+add git hook husky<br>

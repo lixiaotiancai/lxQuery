@@ -572,7 +572,7 @@ lxQuery.fn = lxQuery.prototype;
 
 lxQuery.fn.constructor = lxQuery;
 
-lxQuery.fn.version = '1.0.3';
+lxQuery.fn.version = '1.0.4';
 
 lxQuery.fn.length = 0;
 
@@ -1357,6 +1357,71 @@ exports.default = debounce;
 
 /***/ }),
 
+/***/ "./src/extra/formatDate.js":
+/*!*********************************!*\
+  !*** ./src/extra/formatDate.js ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var formatDate = {
+  /**
+   * @日期格式化
+   *
+   * @param {String} pattern 日期格式 (格式化字符串的符号参考w3标准 http://www.w3.org/TR/NOTE-datetime)
+   * @param {Date Object} date 待格式化的日期对象
+   * @return {String} 格式化后的日期字符串
+   * @example
+   * formatDate("YYYY-MM-DD hh:mm:ss", (new Date()));
+   */
+
+  formatDate: function formatDate(pattern, date) {
+    if (typeof date !== 'number' && !(date instanceof Date)) {
+      return '';
+    }
+
+    if (typeof date === 'number') {
+      date = new Date(date);
+    }
+
+    function formatNumber(format, num) {
+      format = format.length;
+
+      return format === 1 ? num : String(Math.pow(10, format) + num).slice(-format);
+    }
+
+    var result = pattern.replace(/([YMDhms])\1*/g, function (format) {
+      switch (format.charAt()) {
+        case 'Y':
+          return formatNumber(format, date.getFullYear());
+        case 'M':
+          return formatNumber(format, date.getMonth() + 1);
+        case 'D':
+          return formatNumber(format, date.getDate());
+        case 'h':
+          return formatNumber(format, date.getHours());
+        case 'm':
+          return formatNumber(format, date.getMinutes());
+        case 's':
+          return formatNumber(format, date.getSeconds());
+      }
+    });
+
+    return result;
+  }
+
+};
+
+exports.default = formatDate;
+
+/***/ }),
+
 /***/ "./src/extra/getAbsoluteUrl.js":
 /*!*************************************!*\
   !*** ./src/extra/getAbsoluteUrl.js ***!
@@ -1433,9 +1498,17 @@ var _sessionStorage = __webpack_require__(/*! ./sessionStorage */ "./src/extra/s
 
 var _sessionStorage2 = _interopRequireDefault(_sessionStorage);
 
+var _formatDate = __webpack_require__(/*! ./formatDate */ "./src/extra/formatDate.js");
+
+var _formatDate2 = _interopRequireDefault(_formatDate);
+
+var _xss = __webpack_require__(/*! ./xss */ "./src/extra/xss.js");
+
+var _xss2 = _interopRequireDefault(_xss);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.default = _extends({}, _query2.default, _getAbsoluteUrl2.default, _debounce2.default, _throttle2.default, _sleep2.default, _cookie2.default, _localStorage2.default, _sessionStorage2.default);
+exports.default = _extends({}, _query2.default, _getAbsoluteUrl2.default, _debounce2.default, _throttle2.default, _sleep2.default, _cookie2.default, _localStorage2.default, _sessionStorage2.default, _formatDate2.default, _xss2.default);
 
 /***/ }),
 
@@ -1626,6 +1699,64 @@ var throttle = {
 };
 
 exports.default = throttle;
+
+/***/ }),
+
+/***/ "./src/extra/xss.js":
+/*!**************************!*\
+  !*** ./src/extra/xss.js ***!
+  \**************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var xss = {
+  /**
+   * 去掉所有的html标签, 只保留标签中的文本
+   *
+   * 标签有4类情况
+   * 1.双标签 <div></div>
+   * 2.单标签 <input />、<input>、</input>(这种标签虽然不会被编译, 但还是要和谐一下, 若不为英文, 则会被编译为注释)、</ input>(会被编译为注释)
+   * 3.空标签 <></>、<>、</>
+   * 4.会被直接编译为文本的标签 < div>、<中文>, <123 /> 这类标签可以开绿灯
+   *
+   * test:
+   *
+   * input：
+   * delHtmlTag('<h1>这是h1的内容!<a href="a.com">详情可点击</a></><img src="a.jpg" />')
+   * output:
+   * 这是h1的内容!详情可点击
+   *
+   * input:
+   * delHtmlTag('<啦啦啦 />123456<123></input aaa>')
+   * output:
+   * <啦啦啦 />123456<123>
+   */
+  delHtmlTag: function delHtmlTag(text) {
+    var REG_Tab_Double = /<([a-z]*?)[^<>]*?>(.*?)<\/\1>/ig;
+    var REG_Tab_Single = /<(?:[a-z]+?.*?\/?|\/.+?)>/ig;
+    var REG_Tab_Null = /<\s*?\/*?\s*?>/ig;
+
+    return text.replace(REG_Tab_Double, function ($0, $1, $2) {
+      return $2;
+    }).replace(REG_Tab_Single, '').replace(REG_Tab_Null);
+  },
+
+  /**
+   * 转义 HTML 特殊字符
+   * @param {String} str
+   */
+  htmlEncode: function htmlEncode(str) {
+    return String(str).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/'/g, '&#39;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+};
+
+exports.default = xss;
 
 /***/ }),
 

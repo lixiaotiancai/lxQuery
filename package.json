@@ -1,6 +1,6 @@
 {
   "name": "lxquery",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "lxQuery, Easy Javascript",
   "scripts": {
     "test": "npx jest",
