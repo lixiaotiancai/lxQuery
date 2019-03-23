@@ -1,14 +1,23 @@
-(function webpackUniversalModuleDefinition(root, factory) {
-	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory();
-	else if(typeof define === 'function' && define.amd)
-		define([], factory);
-	else if(typeof exports === 'object')
-		exports["lxQuery"] = factory();
-	else
-		root["lxQuery"] = factory();
-})(window, function() {
-return /******/ (function(modules) { // webpackBootstrap
+(function(global, factory) {
+  if (typeof module === 'object' && typeof module.exports === 'object') {
+    module.exports = global.document ?
+      factory(global, true) :
+      function(w) {
+        if (!w.document) {
+          throw new Error('lxQuery requires a window with a document')
+        }
+        return factory(w)
+      }
+  } else if (typeof define === 'function' && define.amd) {
+    // 兼容AMD规范
+    define('lxQuery', [], function() {
+      return factory(global)
+    })
+  } else {
+    factory(global)
+  }
+})(typeof window !== 'undefined' ? window : this, function(window, noGlobal) {
+  return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 /******/
@@ -522,7 +531,7 @@ exports.default = _extends({}, _callbacks2.default);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(global) {
+
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -688,12 +697,11 @@ lxQuery.fn.extend(_extends({
 lxQuery.fn.init.prototype = lxQuery.fn;
 
 // 如果global指向window则说明是浏览器环境, 则对外暴露接口
-if (global === window) {
+if (!noGlobal) {
   window.lx = window.lxQuery = lxQuery;
 }
 
 exports.default = lxQuery;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../node_modules/webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
 
 /***/ }),
 
@@ -2190,4 +2198,4 @@ module.exports = __webpack_require__(/*! ./src/lxquery.js */"./src/lxquery.js");
 /***/ })
 
 /******/ });
-});
+})

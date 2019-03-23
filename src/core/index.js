@@ -147,7 +147,7 @@ lxQuery.fn.extend({
 lxQuery.fn.init.prototype = lxQuery.fn
 
 // 如果global指向window则说明是浏览器环境, 则对外暴露接口
-if (global === window) {
+if (!noGlobal) {
   window.lx = window.lxQuery = lxQuery
 }
 
